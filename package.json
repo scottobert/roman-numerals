@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scottobert/leetcode.git"
+    "url": "git+https://github.com/scottobert/roman-numerals.git"
   },
   "author": "Scott Obert",
   "license": "GPL-2.0",
   "bugs": {
-    "url": "https://github.com/scottobert/leetcode/issues"
+    "url": "https://github.com/scottobert/roman-numerals/issues"
   },
-  "homepage": "https://github.com/scottobert/leetcode#readme",
+  "homepage": "https://github.com/scottobert/roman-numerals#readme",
   "devDependencies": {
     "@jedmao/semantic-release-npm-github-config": "^1.0.9",
     "@types/chai": "^4.3.1",
