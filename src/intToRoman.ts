@@ -14,6 +14,7 @@ export function intToRoman(num: number): string {
         '100': 'C',
         '400': 'CD',
         '500': 'D',
+        '900': 'CM',
         '1000': 'M'
     };
     let result = '';
