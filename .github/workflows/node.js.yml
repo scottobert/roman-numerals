@@ -58,7 +58,6 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
   test:
-    needs: analyze
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -75,7 +74,7 @@ jobs:
     - run: npm test
   
   release:
-    needs: test
+    needs: [analyze, test]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
