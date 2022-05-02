@@ -3,13 +3,33 @@
   "version": "1.0.0",
   "description": "Utility functions for working with Roman Numerals",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "/dist/**/*.{js,map}"
   ],
   "scripts": {
-    "test": "ts-mocha",
+    "test": "nyc mocha",
     "build": "tsc",
     "semantic-release": "semantic-release"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
   },
   "publishConfig": {
     "access": "public"
@@ -42,5 +62,9 @@
       "main",
       "next"
     ]
+  },
+  "dependencies": {
+    "nyc": "^15.1.0",
+    "source-map-support": "^0.5.21"
   }
 }
