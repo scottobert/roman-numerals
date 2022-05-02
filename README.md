@@ -12,14 +12,14 @@
   </a>
 </p>
 
-> Given a roman numeral, convert it to an integer.
+> Utility functions for converting integers to roman numerals and vice versa.
 
 ### 🏠 [Homepage](https://github.com/scottobert/roman-numerals#readme)
 
 ## Install
 
 ```sh
-npm install
+npm install @scottobert/roman-numerals
 ```
 
 ## Run tests
@@ -30,9 +30,10 @@ npm run test
 
 ## Usage
 ```ts
-import { romanToInt } from "@scottobert/roman-numerals";
+import { romanToInt, intToRoman } from "@scottobert/roman-numerals";
 
 console.log(romanToInt("MCMXCIV")); // 1994
+console.log(intToRoman(1994)); // MCMXCIV
 ```
 
 ## Author
