@@ -10,6 +10,9 @@
   <a href="https://github.com/scottobert/roman-numerals/blob/master/LICENSE" target="_blank">
     <img alt="License: GPL--2.0" src="https://img.shields.io/github/license/scottobert/@scottobert/roman-numerals" />
   </a>
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=scottobert_roman-numerals&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=scottobert_roman-numerals)
+
 </p>
 
 > Utility functions for converting integers to roman numerals and vice versa.
