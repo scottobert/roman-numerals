@@ -13,6 +13,12 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=scottobert_roman-numerals&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=scottobert_roman-numerals)
 
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=scottobert_roman-numerals&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=scottobert_roman-numerals)
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=scottobert_roman-numerals&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=scottobert_roman-numerals)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=scottobert_roman-numerals&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=scottobert_roman-numerals)
+
 </p>
 
 > Utility functions for converting integers to roman numerals and vice versa.
