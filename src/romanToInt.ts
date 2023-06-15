@@ -17,7 +17,7 @@ export function romanToInt(s: string): number {
 
     let retVal = 0;
     let skipNext = false;
-    for (var i = 0; i < s.length; i++) {
+    for (let i = 0; i < s.length; i++) {
         if(skipNext) {
             skipNext = false;
             continue;
