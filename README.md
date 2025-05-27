@@ -45,6 +45,18 @@ console.log(romanToInt("MCMXCIV")); // 1994
 console.log(intToRoman(1994)); // MCMXCIV
 ```
 
+## New Feature: Validate Roman Numeral Strings
+
+Check if a string is a valid Roman numeral. This can be useful for input validation before conversion.
+
+### Example
+```ts
+import { isValidRoman } from "@scottobert/roman-numerals";
+
+console.log(isValidRoman("MCMXCIV")); // true
+console.log(isValidRoman("INVALID")); // false
+```
+
 ## Author
 
 👤 **Scott Obert**
