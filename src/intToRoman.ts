@@ -1,4 +1,12 @@
-export function intToRoman(num: number): string {
+/**
+ * Converts an integer to a Roman numeral.
+ * @param num - The integer to convert (1-3999).
+ * @param options - Optional settings.
+ * @param options.lowercase - If true, returns the numeral in lowercase.
+ * @returns The Roman numeral as a string.
+ * @throws {RangeError} If num is out of range.
+ */
+export function intToRoman(num: number, options?: { lowercase?: boolean }): string {
     if(num < 1 || num > 3999) {
         throw new Error(`invalid number: ${num}`);
     }
@@ -25,5 +33,6 @@ export function intToRoman(num: number): string {
             num -= parseInt(number);
         }
     }
+    if (options?.lowercase) return result.toLowerCase();
     return result;
 }
