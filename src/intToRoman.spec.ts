@@ -105,4 +105,7 @@ describe('intToRoman', () => {
         const input = 3999;
         expect(intToRoman(input)).to.equal('MMMCMXCIX');
     });
+    it('should return lowercase Roman numerals when requested', () => {
+        expect(intToRoman(14, { lowercase: true })).to.equal('xiv');
+    });
 });
