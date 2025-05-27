@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "scottobert",
+        "projectKey": "scottobert_roman-numerals"
+    }
+}
