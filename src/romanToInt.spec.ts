@@ -52,4 +52,8 @@ describe('romanToInt', () => {
     it('should return 1994 for MCMXCIV', () => {
         expect(romanToInt('MCMXCIV')).to.equal(1994);
     });
+    it('should accept lowercase input', () => {
+        expect(romanToInt('xiv')).to.equal(14);
+        expect(romanToInt('mcmxc')).to.equal(1990);
+    });
 });
