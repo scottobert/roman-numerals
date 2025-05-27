@@ -49,7 +49,7 @@ console.log(intToRoman(1994)); // MCMXCIV
 
 👤 **Scott Obert**
 
-* Github: [@scottobert](https://github.com/scottobert)
+* GitHub: [@scottobert](https://github.com/scottobert)
 
 ## 🤝 Contributing
 

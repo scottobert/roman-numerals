@@ -15,4 +15,4 @@ In addition, please include the following information along with your report:
 - Your name and affiliation (if any).
 - A brief description of the technical details of the vulnerabilities. 
 
-We will contact you with further steps and quenstions if necessary.
+We will contact you with further steps and questions if necessary.
