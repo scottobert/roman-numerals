@@ -56,8 +56,6 @@ describe('intToRoman', () => {
         const X_BAR = `X${OVERLINE}`;
         const M_BAR = `M${OVERLINE}`;
         const C_BAR = `C${OVERLINE}`;
-        // const D_BAR = `D${OVERLINE}`; // Not used directly in these specific examples below
-        // const L_BAR = `L${OVERLINE}`; // Not used directly in these specific examples below
 
         it('should error for numbers < 1 when useVinculum is true', () => {
             expect(() => intToRoman(0, { useVinculum: true })).to.throw(`Input number 0 is out of range (1-3999999).`);
