@@ -20,10 +20,50 @@
  * @returns True if valid, false otherwise.
  */
 
-const ROMAN_CHARS_SET = "IVXLCDM"; // Renamed to avoid conflict if ROMAN_CHARS is global in some env
+const ROMAN_CHARS_SET = "IVXLCDM";
+const OVERLINE_CHAR = '\u0305';
 // Regex for a standard Roman numeral (1-3999 if non-empty).
-// Allows empty string for helper, but main function logic determines if empty is okay for a given part.
 const strictRomanRegexPattern = /^(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
+
+interface ParseSegmentsResult {
+    vinculumChars: string;
+    standardChars: string;
+    parsingError: boolean;
+}
+
+/**
+ * Parses the input string into vinculum and standard segments.
+ * @param input The uppercased input string.
+ * @returns An object containing vinculumChars, standardChars, and a parsingError flag.
+ */
+function _parseInputIntoSegments(input: string): ParseSegmentsResult {
+    let vinculumChars = "";
+    let standardChars = "";
+    let parsingVinculum = true;
+    let parsingError = false;
+    let i = 0;
+
+    while (i < input.length) {
+        const char = input[i];
+        const nextChar = (i + 1 < input.length) ? input[i + 1] : null;
+
+        if (parsingVinculum && ROMAN_CHARS_SET.includes(char) && nextChar === OVERLINE_CHAR) {
+            vinculumChars += char;
+            i += 2; // Consumed char and its overline
+        } else {
+            if (parsingVinculum) {
+                parsingVinculum = false; // Transition from vinculum to standard parsing
+            }
+            if (char === OVERLINE_CHAR) {
+                parsingError = true; // Stray overline
+                break; 
+            }
+            standardChars += char;
+            i += 1; // Consumed a single standard character
+        }
+    }
+    return { vinculumChars, standardChars, parsingError };
+}
 
 /**
  * Helper function to validate a Roman numeral segment.
@@ -49,56 +89,30 @@ export function isValidRoman(romanWithVinculum: string): boolean {
     }
 
     const input = romanWithVinculum.toUpperCase();
-    const OVERLINE_CHAR = '\u0305';
+    const parseResult = _parseInputIntoSegments(input);
 
-    let vinculumRomanChars = "";
-    let standardRomanChars = "";
-    let parsingVinculum = true;
-
-    for (let i = 0; i < input.length; i++) {
-        const char = input[i];
-        const nextChar = input[i + 1];
-
-        if (parsingVinculum && ROMAN_CHARS_SET.includes(char) && nextChar === OVERLINE_CHAR) {
-            vinculumRomanChars += char;
-            i++; // consume the overline character
-        } else {
-            if (parsingVinculum) {
-                parsingVinculum = false;
-            }
-            if (char === OVERLINE_CHAR) {
-                return false; // Stray overline in standard part or after non-Roman char.
-            }
-            standardRomanChars += char;
-        }
-    }
-
-    // If input yielded no characters for either part (e.g. "@@@", "̅"), it's invalid.
-    // This check is crucial because _isValidRomanSegment might return true for an empty segment
-    // if isEmptyAllowed is true. We need to ensure that the *original input* wasn't effectively empty
-    // of Roman numeral content.
-    if (vinculumRomanChars.length === 0 && standardRomanChars.length === 0) {
+    if (parseResult.parsingError) {
         return false;
     }
 
-    // Validate vinculum part: if it exists, it must be a non-empty valid Roman numeral (1-3999).
-    // An empty vinculumRomanChars string is fine if standardRomanChars has content.
-    if (vinculumRomanChars.length > 0) {
-        if (!_isValidRomanSegment(vinculumRomanChars, false)) { // false: empty not allowed if part exists
+    const { vinculumChars, standardChars } = parseResult;
+
+    // If input yielded no characters for either part (e.g. "@@@", "̅" alone), it's invalid.
+    if (vinculumChars.length === 0 && standardChars.length === 0) {
+        return false;
+    }
+
+    // Validate vinculum part: if it exists, it must be a non-empty valid Roman numeral.
+    if (vinculumChars.length > 0) {
+        if (!_isValidRomanSegment(vinculumChars, false)) { // false: empty not allowed if part exists
             return false;
         }
     }
 
-    // Validate standard part: must be a valid Roman numeral (can be empty, representing 0).
-    // An empty standardRomanChars string is fine if vinculumRomanChars has content.
-    if (!_isValidRomanSegment(standardRomanChars, true)) { // true: empty is allowed
+    // Validate standard part: must be a valid Roman numeral (can be empty).
+    if (!_isValidRomanSegment(standardChars, true)) { // true: empty is allowed
         return false;
     }
-
-    // If we reached here, all checks passed:
-    // - Parsing separated vinculum and standard parts correctly.
-    // - Vinculum part (if it has characters) is valid and non-empty by its Roman representation.
-    // - Standard part is valid (can be empty).
-    // - At least one of the parts was formed from actual Roman characters in the input.
+    
     return true;
 }

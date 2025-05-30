@@ -29,15 +29,19 @@ export function romanToInt(romanWithVinculum: string): number {
 
     let vinculumChars = "";
     let standardChars = "";
+    let i = 0;
 
-    for (let i = 0; i < input.length; i++) {
-        if (i + 1 < input.length && input[i + 1] === OVERLINE_CHAR) {
-            if (digitMap[input[i]]) { // Ensure the character is a valid Roman numeral base
-                vinculumChars += input[i];
-            }
-            i++; // Skip the overline character
+    while (i < input.length) {
+        const char = input[i];
+        // Check bounds for nextChar carefully: i + 1 must be strictly less than input.length
+        const nextChar = (i + 1 < input.length) ? input[i + 1] : null;
+
+        if (nextChar === OVERLINE_CHAR && digitMap[char]) { // Check digitMap[char] to ensure 'char' is a Roman numeral base
+            vinculumChars += char;
+            i += 2; // Consumed char and its overline
         } else {
-            standardChars += input[i];
+            standardChars += char;
+            i += 1; // Consumed a single standard character (or a non-Roman char, or a Roman char not part of a vinculum pair)
         }
     }
 
