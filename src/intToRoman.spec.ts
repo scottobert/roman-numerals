@@ -1,111 +1,105 @@
 import { expect } from 'chai';
 import { intToRoman } from "./intToRoman";
+
 describe('intToRoman', () => {
-    it('should error for negative numbers', () => {
-        const input = -1;
-        expect(() => intToRoman(input)).to.throw(`invalid number: ${input}`);
+    describe('Standard Numerals (no vinculum or useVinculum: false)', () => {
+        it('should error for numbers < 1', () => {
+            // The error message changed in the implementation to be more specific with RangeError
+            expect(() => intToRoman(0)).to.throw(`Input number 0 is out of range (1-3999).`);
+            expect(() => intToRoman(-1)).to.throw(`Input number -1 is out of range (1-3999).`);
+        });
+
+        it('should error for numbers > 3999 when useVinculum is false or not provided', () => {
+            expect(() => intToRoman(4000)).to.throw(`Input number 4000 is out of range (1-3999).`);
+            expect(() => intToRoman(4000, { useVinculum: false })).to.throw(`Input number 4000 is out of range (1-3999).`);
+        });
+
+        const testCases = [
+            { input: 1, expected: 'I' },
+            { input: 3, expected: 'III' },
+            { input: 4, expected: 'IV' },
+            { input: 5, expected: 'V' },
+            { input: 9, expected: 'IX' },
+            { input: 10, expected: 'X' },
+            { input: 40, expected: 'XL' },
+            { input: 50, expected: 'L' },
+            { input: 90, expected: 'XC' },
+            { input: 100, expected: 'C' },
+            { input: 400, expected: 'CD' },
+            { input: 500, expected: 'D' },
+            { input: 900, expected: 'CM' },
+            { input: 1000, expected: 'M' },
+            { input: 58, expected: 'LVIII' },
+            { input: 1994, expected: 'MCMXCIV' },
+            { input: 3999, expected: 'MMMCMXCIX' }
+        ];
+
+        testCases.forEach(({ input, expected }) => {
+            it(`should return ${expected} for ${input} without options`, () => {
+                expect(intToRoman(input)).to.equal(expected);
+            });
+            it(`should return ${expected} for ${input} with useVinculum: false`, () => {
+                expect(intToRoman(input, { useVinculum: false })).to.equal(expected);
+            });
+        });
+
+        it('should return lowercase Roman numerals when requested (no vinculum)', () => {
+            expect(intToRoman(14, { lowercase: true })).to.equal('xiv');
+            expect(intToRoman(1994, { lowercase: true, useVinculum: false })).to.equal('mcmxciv');
+        });
     });
-    it('should error for numbers > 3999', () => {
-        const input = 4000;
-        expect(() => intToRoman(input)).to.throw(`invalid number: ${input}`);
-    });
-    it('should return IV for 4', () => {
-        const input = 4;
-        expect(intToRoman(input)).to.equal('IV');
-    });
-    it('should return IX for 9', () => {
-        const input = 9;
-        expect(intToRoman(input)).to.equal('IX');
-    });
-    it('should return X for 10', () => {
-        const input = 10;
-        expect(intToRoman(input)).to.equal('X');
-    });
-    it('should return XX for 20', () => {
-        const input = 20;
-        expect(intToRoman(input)).to.equal('XX');
-    });
-    it('should return XXX for 30', () => {
-        const input = 30;
-        expect(intToRoman(input)).to.equal('XXX');
-    });
-    it('should return XL for 40', () => {
-        const input = 40;
-        expect(intToRoman(input)).to.equal('XL');
-    });
-    it('should return L for 50', () => {
-        const input = 50;
-        expect(intToRoman(input)).to.equal('L');
-    });
-    it('should return LX for 60', () => {
-        const input = 60;
-        expect(intToRoman(input)).to.equal('LX');
-    });
-    it('should return LXX for 70', () => {
-        const input = 70;
-        expect(intToRoman(input)).to.equal('LXX');
-    });
-    it('should return LXXX for 80', () => {
-        const input = 80;
-        expect(intToRoman(input)).to.equal('LXXX');
-    });
-    it('should return XC for 90', () => {
-        const input = 90;
-        expect(intToRoman(input)).to.equal('XC');
-    });
-    it('should return C for 100', () => {
-        const input = 100;
-        expect(intToRoman(input)).to.equal('C');
-    });
-    it('should return CC for 200', () => {
-        const input = 200;
-        expect(intToRoman(input)).to.equal('CC');
-    });
-    it('should return CCC for 300', () => {
-        const input = 300;
-        expect(intToRoman(input)).to.equal('CCC');
-    });
-    it('should return CD for 400', () => {
-        const input = 400;
-        expect(intToRoman(input)).to.equal('CD');
-    });
-    it('should return D for 500', () => {
-        const input = 500;
-        expect(intToRoman(input)).to.equal('D');
-    });
-    it('should return DC for 600', () => {
-        const input = 600;
-        expect(intToRoman(input)).to.equal('DC');
-    });
-    it('should return DCC for 700', () => {
-        const input = 700;
-        expect(intToRoman(input)).to.equal('DCC');
-    });
-    it('should return DCCC for 800', () => {
-        const input = 800;
-        expect(intToRoman(input)).to.equal('DCCC');
-    });
-    it('should return CM for 900', () => {
-        const input = 900;
-        expect(intToRoman(input)).to.equal('CM');
-    });
-    it('should return M for 1000', () => {
-        const input = 1000;
-        expect(intToRoman(input)).to.equal('M');
-    });
-    it('should return MM for 2000', () => {
-        const input = 2000;
-        expect(intToRoman(input)).to.equal('MM');
-    });
-    it('should return MMM for 3000', () => {
-        const input = 3000;
-        expect(intToRoman(input)).to.equal('MMM');
-    });
-    it('should return MMMCMXCIX for 3999', () => {
-        const input = 3999;
-        expect(intToRoman(input)).to.equal('MMMCMXCIX');
-    });
-    it('should return lowercase Roman numerals when requested', () => {
-        expect(intToRoman(14, { lowercase: true })).to.equal('xiv');
+
+    describe('Vinculum Notation (useVinculum: true)', () => {
+        const OVERLINE = '\u0305';
+        const IV_BAR = `I${OVERLINE}V${OVERLINE}`;
+        const V_BAR = `V${OVERLINE}`;
+        const X_BAR = `X${OVERLINE}`;
+        const M_BAR = `M${OVERLINE}`;
+        const C_BAR = `C${OVERLINE}`;
+        // const D_BAR = `D${OVERLINE}`; // Not used directly in these specific examples below
+        // const L_BAR = `L${OVERLINE}`; // Not used directly in these specific examples below
+
+        it('should error for numbers < 1 when useVinculum is true', () => {
+            expect(() => intToRoman(0, { useVinculum: true })).to.throw(`Input number 0 is out of range (1-3999999).`);
+            expect(() => intToRoman(-1, { useVinculum: true })).to.throw(`Input number -1 is out of range (1-3999999).`);
+        });
+
+        it('should error for numbers > 3,999,999 when useVinculum is true', () => {
+            expect(() => intToRoman(4000000, { useVinculum: true })).to.throw(`Input number 4000000 is out of range (1-3999999).`);
+        });
+
+        it(`should correctly convert numbers >= 4000 using vinculum`, () => {
+            expect(intToRoman(4000, { useVinculum: true })).to.equal(IV_BAR); // 4_bar
+            expect(intToRoman(4321, { useVinculum: true })).to.equal(`${IV_BAR}CCCXXI`); // 4_bar CCCXXI
+            expect(intToRoman(5000, { useVinculum: true })).to.equal(V_BAR);   // 5_bar
+            expect(intToRoman(10000, { useVinculum: true })).to.equal(X_BAR);  // 10_bar
+            // 12_bar CCCXLV = X_bar II_bar CCCXLV
+            const XII_BAR = `${X_BAR}I${OVERLINE}I${OVERLINE}`;
+            expect(intToRoman(12345, { useVinculum: true })).to.equal(`${XII_BAR}CCCXLV`);
+        });
+        
+        const MCCXXXIV_BAR = `${M_BAR}${C_BAR}${C_BAR}${X_BAR}${X_BAR}${X_BAR}I${OVERLINE}V${OVERLINE}`; // 1234_bar
+        it(`should convert 1,234,567 to ${MCCXXXIV_BAR}DLXVII`, () => {
+            expect(intToRoman(1234567, { useVinculum: true })).to.equal(`${MCCXXXIV_BAR}DLXVII`);
+        });
+
+        // MMMCMXCIX_bar = M_bar M_bar M_bar CM_bar XC_bar IX_bar
+        const MMMCMXCIX_BAR = `${M_BAR.repeat(3)}${C_BAR}${M_BAR}${X_BAR}${C_BAR}I${OVERLINE}X${OVERLINE}`;
+        it(`should convert 3,999,999 to ${MMMCMXCIX_BAR}CMXCIX`, () => {
+            expect(intToRoman(3999999, { useVinculum: true })).to.equal(`${MMMCMXCIX_BAR}CMXCIX`);
+        });
+        
+        it('should handle numbers < 4000 as standard numerals even when useVinculum is true', () => {
+            expect(intToRoman(1, { useVinculum: true })).to.equal('I');
+            expect(intToRoman(1994, { useVinculum: true })).to.equal('MCMXCIV');
+            expect(intToRoman(3999, { useVinculum: true })).to.equal('MMMCMXCIX');
+        });
+
+        it('should work with lowercase: true and useVinculum: true', () => {
+            expect(intToRoman(4000, { useVinculum: true, lowercase: true })).to.equal(IV_BAR.toLowerCase());
+            expect(intToRoman(5000, { useVinculum: true, lowercase: true })).to.equal(V_BAR.toLowerCase());
+            expect(intToRoman(1234567, { useVinculum: true, lowercase: true })).to.equal(`${MCCXXXIV_BAR}DLXVII`.toLowerCase());
+            expect(intToRoman(3999, { useVinculum: true, lowercase: true })).to.equal('mmmcmxcix'); // < 4000
+        });
     });
 });
