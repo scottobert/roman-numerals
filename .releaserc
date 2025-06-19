@@ -33,6 +33,12 @@
           ]
         }
       }
+    ],
+    [
+      "semantic-release-github-pullrequest",
+      {
+        "assets": ["CHANGELOG.md", "package.json", "package-lock.json"]
+      }
     ]
   ]
 }

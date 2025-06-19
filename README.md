@@ -23,7 +23,29 @@
 
 > Utility functions for converting integers to roman numerals and vice versa.
 
-### 🏠 [Homepage](https://github.com/scottobert/roman-numerals#readme)
+---
+
+## ✨ New: Vinculum (Overline) Notation Support
+
+This library now supports **vinculum notation** (overline) for representing large numbers in Roman numerals (up to 3,999,999).
+
+- Overlines are represented using a Unicode combining overline (U+0305) after each numeral character.
+- Example: 5,000 is written as `V
+5` (V̅), 10,000 as `X
+5` (X̅), etc.
+- Both conversion and validation functions support this format.
+
+### Example Usage
+```ts
+import { romanToInt, intToRoman, isValidRoman } from "@scottobert/roman-numerals";
+
+console.log(intToRoman(5000)); // V̅
+console.log(romanToInt("V̅")); // 5000
+console.log(intToRoman(1234567)); // M̅C̅C̅X̅X̅X̅I̅I̅I̅CDLXVII
+console.log(isValidRoman("M̅C̅M̅X̅C̅I̅V̅")); // true
+```
+
+---
 
 ## Install
 
