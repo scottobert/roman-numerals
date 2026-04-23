@@ -29,9 +29,10 @@ jobs:
     needs: [codeql, test, sonar]
     if: github.event_name == 'push'
     permissions:
-      id-token: write  # Required for OIDC
       contents: write
-      packages: write
+      issues: write
+      pull-requests: write
+      id-token: write
     uses: scottobert/deployment-pipeline/.github/workflows/semantic-release.yml@main
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
