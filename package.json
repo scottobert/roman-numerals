@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scottobert/roman-numerals.git"
+    "url": "https://github.com/scottobert/roman-numerals"
   },
   "author": "Scott Obert",
   "license": "GPL-2.0",
@@ -51,17 +51,16 @@
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/github": "^11.0.3",
-    "@semantic-release/npm": "^12.0.1",
-    "@semantic-release/release-notes-generator": "^14.0.3",
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.15.27",
     "chai": "^4.5.0",
     "mocha": "^11.7.0",
     "nyc": "^17.1.0",
-    "semantic-release": "^24.2.5",
-    "semantic-release-github-pullrequest": "^1.3.0",
+    "semantic-release": "^25.0.3",
     "source-map-support": "^0.5.21",
     "ts-mocha": "^11.1.0",
     "ts-node": "^10.9.2",
@@ -70,14 +69,13 @@
   },
   "release": {
     "branches": [
-      "main",
-      "next"
+      "main"
     ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       "@semantic-release/changelog",
-      "@semantic-release/npm",
+      ["@semantic-release/npm", { "npmPublish": false }],
       "@semantic-release/github"
     ]
   }
